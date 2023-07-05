@@ -2,3 +2,6 @@
 models
 temp
 __pycache__
+.venv
+*.jpg
+inswapper_128.onnx:Zone.Identifier
