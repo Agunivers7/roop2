@@ -9,6 +9,7 @@ from roop.core import (
     suggest_max_memory,
     suggest_execution_threads,
 )
+from roop.processors.frame.core import get_frame_processors_modules
 from roop.utilities import normalize_output_path
 import os
 from PIL import Image
@@ -52,11 +53,17 @@ def swap_face(source_file, target_file):
         roop.globals.output_path,
     )
 
+    for frame_processor in get_frame_processors_modules(
+        roop.globals.frame_processors
+    ):
+        if not frame_processor.pre_check():
+            return
+
     start()
     return output_path
 
 
-demo = gr.Interface(
+app = gr.Interface(
     fn=swap_face, inputs=[gr.Image(), gr.Image()], outputs="image"
 )
-demo.launch()
+app.launch()
